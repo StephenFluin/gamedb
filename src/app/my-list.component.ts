@@ -8,12 +8,24 @@ import 'rxjs/add/operator/switchMap';
 
 @Component({
     template: `
-        <div *ngFor="let game of gameList | async">{{game.name}}</div>
+        <div class="card-list">
+            <md-card *ngFor="let game of gameList | async">
+                <md-card-header>{{game.name}}</md-card-header>
+                <md-card-content>
+                    <div *ngIf="game.peakYear">{{game.peakYear}}</div>
+                    <div *ngIf="game.hours">{{game.hours}}h estimated</div>
+                </md-card-content>
+                <md-card-actions><button md-raised-button (click)="delete(game)">x</button></md-card-actions>
+
+            </md-card>
+        </div>
         <div *ngIf="(gameList | async) === null">Loading games...</div>
         <div *ngIf="(gameList | async) && (gameList | async).length == 0">You have no games in your db yet.</div>
 
         <form #newGame="ngForm" (submit)="create(newGame.value)">
-            <input name="name" ngModel>
+            <md-input name="name" ngModel placeholder="Game Name"></md-input>
+            <md-input name="peakYear" ngModel placeholder="Peak Year" type="number"></md-input>
+            <md-input name="hours" ngModel placeholder="Estimated Hours" type="number"></md-input>
             <button md-raised-button color="primary" type="submit">Create</button>
         </form>
     `,
@@ -37,5 +49,8 @@ export class MyListComponent {
     create(newGame) {
         event.preventDefault();
         let result = this.gameList.push(newGame);
+    }
+    delete(game) {
+        this.gameList.remove(game);
     }
 }

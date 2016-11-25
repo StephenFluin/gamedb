@@ -9,3 +9,20 @@
 #page {
     padding:16px;
 }
+.card-list md-card {
+    margin:16px;
+    width:300px;
+    display:flex;
+    flex-direction:column;
+}
+md-card-content {
+    flex-grow:1;
+}
+md-card-actions {
+    text-align:right;
+}
+.card-list {
+    margin: 0 -16px;
+    display:flex;
+    flex-wrap: wrap;
+}
